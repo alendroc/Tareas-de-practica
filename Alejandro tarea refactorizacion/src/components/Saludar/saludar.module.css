@@ -1,0 +1,66 @@
+ion-avatar {
+    --border-radius: 4px;
+    width: 10vw;
+    height: 10vw;
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 90px;
+    max-height: 90px;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+  .avatar{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+  }
+  
+  /* Tablets pequeñas */
+ /* @media (min-width: 600px) {
+    ion-avatar {
+   
+    }
+  }*/
+  
+  /* Tablets grandes */
+ /* @media (min-width: 900px) {
+    ion-avatar {
+      width: 80px;
+      height: 80px;
+    }
+  }*/
+  
+  /* Escritorio */
+  /*@media (min-width: 1200px) {
+    ion-avatar {
+      width: 90px;
+      height: 90px;
+    }
+  }*/
+
+.responsive-text {
+    font-size: 12px; /* Tamaño por defecto */
+    color: aliceblue;
+  }
+  
+  /* Tablets pequeñas */
+  @media (min-width: 600px) {
+    .responsive-text {
+      font-size: 18px;
+    }
+  }
+  
+  /* Tablets grandes */
+  @media (min-width: 900px) {
+    .responsive-text {
+      font-size: 20px;
+    }
+  }
+  
+  /* Escritorio */
+  @media (min-width: 1200px) {
+    .responsive-text {
+      font-size: 24px;
+    }
+  }
