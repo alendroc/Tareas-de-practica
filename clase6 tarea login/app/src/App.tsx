@@ -1,12 +1,15 @@
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
+  IonHeader,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonTitle,
+  IonToolbar,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -15,6 +18,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import Home from './pages/home';
+import Unsucces from './pages/unsucces/unsucces';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -52,7 +56,7 @@ setupIonicReact();
 
 const App: React.FC = () => {
 
-  const [user, setuser] = useState<userData | undefined >();
+  const [user, setuser] = useState<userData | undefined >(undefined);
 
 
     const userLogin = (user: userData)  =>
@@ -60,57 +64,70 @@ const App: React.FC = () => {
       setuser(user);
     }
 
+    console.log(user)
+  if(!user) {
+    return(
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path="/login">
+              <Login login={userLogin} />
+            </Route>
+            <Redirect to="/login" />
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>)
+  }
+
   return(
   <IonApp>
-
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-
           <Route exact path="/login">
             <Login login={userLogin} />
           </Route>
-
-
+          <Route exact path="/">
+              {user ? <Home /> : <Redirect to="/login" />}
+            </Route>
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
-
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/unsucces">
+            <Unsucces login={userLogin} />
           </Route>
+
+          {/*<Route exact path="/tab2">
+            <Tab2 />
+          </Route>*/}
           <Route path="/tab3">
             <Tab3 />
           </Route> 
 
-          <Seguridad rolPermitido={["admin"]} 
-                user={user}
-                    path={'/seguridad'} 
-                    component={Tab2}  />
-
+          <Seguridad rolPermitido={["admin"]} user={user} component={Tab2}  />
           <Route exact path="/">
            <Home/>
           </Route> 
-
         </IonRouterOutlet> 
+        
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/">
             <IonIcon aria-hidden="true" icon={triangle} />
             <IonLabel>Home</IonLabel>
+          </IonTabButton> 
+          <IonTabButton tab="seguridad" href="/seguridad">
+            <IonIcon aria-hidden="true" icon={square} />
+            <IonLabel>Tab 2</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          {/*<IonTabButton tab="tab2" href="/tab2">
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Services</IonLabel>
-          </IonTabButton>
+          </IonTabButton>*/}
           <IonTabButton tab="tab3" href="/tab3">
             <IonIcon aria-hidden="true" icon={square} />
             <IonLabel>Tab 3</IonLabel>
           </IonTabButton>
-
-          <IonTabButton tab="seguridad" href="/seguridad">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Seguridad</IonLabel>
-          </IonTabButton>
+         
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
