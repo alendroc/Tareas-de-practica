@@ -1,4 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import {
   IonApp,
   IonIcon,
@@ -14,7 +15,9 @@ import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
-
+import { ProviderLogin, useAuth } from './pages/login/contextoLogin';
+import Login from './pages/login/login';
+import Seguridad from './Router/seguridad';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -47,9 +50,17 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: React.FC = () => {
+  return (
+<ProviderLogin>
   <IonApp>
     <IonReactRouter>
+      <IonRouterOutlet>
+      <Route exact path="/login" component={Login} />
+            <Route exact path="/">
+              <AuthRedirect />
+            </Route>
+      </IonRouterOutlet>
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/tab1">
@@ -58,7 +69,7 @@ const App: React.FC = () => (
           <Route exact path="/tab2">
             <Tab2 />
           </Route>
-          <Route path="/tab3">
+          <Route exact path="/tab3">
             <Tab3 />
           </Route>
           <Route exact path="/">
@@ -82,6 +93,12 @@ const App: React.FC = () => (
       </IonTabs>
     </IonReactRouter>
   </IonApp>
-);
+  </ProviderLogin>
+)};
+
+const AuthRedirect: React.FC = () => {
+  const { user } = useAuth();  // Ahora el hook useAuth está dentro del contexto ProviderLogin
+  return user ? <Redirect to="/tab1" /> : <Redirect to="/login" />;
+}
 
 export default App;
