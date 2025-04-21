@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190466759683",
+    "project_id": "practica-7c621",
+    "storage_bucket": "practica-7c621.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190466759683:android:9602ea5330a143227c4236",
+        "android_client_info": {
+          "package_name": "paratica.una.ale"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj2UpcFy0UELAsFCWf1-_UCFMG5CI2fb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
