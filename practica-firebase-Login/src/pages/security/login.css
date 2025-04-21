@@ -1,0 +1,100 @@
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-image: linear-gradient(to top, #52009d, #311886, #151c6b, #06194f, #081432);
+}
+.login-access {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+   
+  }
+  
+  .login-access form {
+    width: 100%;
+    max-width: 350px;
+    background: #ffffff33;
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-access .input-item {
+    margin-bottom: 1.2rem;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    padding-left: 1rem;
+    background-color: #b88484;
+  }
+  
+  .login-access ion-item {
+    --highlight-color-focused: transparent;
+    --background: transparent;
+    --border-color: transparent;
+    margin-bottom: 1rem;
+  }
+  .login-access ion-item::part(native) {
+    padding: 0 !important;
+  }
+  
+  .login-access ion-input {
+    padding-left: 0.5rem;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .login-access ion-icon {
+    font-size: 20px;
+    color: #666;
+    margin-right: 0.5rem;
+  }
+  
+  .login-access ion-button {
+   border: 2px solid #ffffff;
+   --border-radius: 25px;
+   --background: transparent;
+    --box-shadow: 0 4px 10px rgba(155, 93, 229, 0.3);
+    font-weight: bold;
+    width:50%;
+    font-size: 12px;
+   color: #f8f8f8;
+   transition: all 0.3s ease;
+  }
+  
+  .login-access ion-button:hover {
+    --background: #7b3cd1;
+    border-radius: 18px;
+    font-size: 13px;
+  }
+  .login-button{
+    display: flex;
+     gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .login-button{
+       flex-direction: column;   
+        align-items: center;
+    }
+    .login-access{
+      padding: 0;
+    }
+    .login-access ion-button {
+ 
+      width: 80%;
+      font-size: 11px;
+    }
+}
+    @media (max-width: 400px) {
+      .login-access ion-button {
+        width: 100%;
+        font-size: 10px;
+      }
+    }
