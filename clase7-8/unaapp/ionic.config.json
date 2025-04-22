@@ -1,7 +1,0 @@
-{
-  "name": "unaapp",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}

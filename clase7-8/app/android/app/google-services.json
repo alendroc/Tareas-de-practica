@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "1039306729106",
-    "project_id": "una-app-9fdfd",
-    "storage_bucket": "una-app-9fdfd.firebasestorage.app"
+    "project_number": "190466759683",
+    "project_id": "practica-7c621",
+    "storage_bucket": "practica-7c621.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1039306729106:android:ab26450531008ab67ea84b",
+        "mobilesdk_app_id": "1:190466759683:android:9602ea5330a143227c4236",
         "android_client_info": {
-          "package_name": "com.unaapp.appu"
+          "package_name": "paratica.una.ale"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1039306729106-6gg4n460dmvn6dg37t9q6htmepau9sdc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.unaapp.appu",
-            "certificate_hash": "43857bc395673fcd59236be2fd2e6c3084120510"
-          }
-        },
-        {
-          "client_id": "1039306729106-hb5c79696karm089bv1cg4cm8ptgi6rn.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDRuFINYaqQnleZV5HIZRUVrDemAhc-SEU"
+          "current_key": "AIzaSyCj2UpcFy0UELAsFCWf1-_UCFMG5CI2fb0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1039306729106-hb5c79696karm089bv1cg4cm8ptgi6rn.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

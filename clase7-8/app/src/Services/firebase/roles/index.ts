@@ -5,7 +5,7 @@ import { roluser } from "../../../models/roluser";
 
     export const fetchUserRoles = async (uid: string) => {
       try {
-        const queryRolUser = query(collection(db, "roluser"), where("user_id", "==", uid));
+        const queryRolUser = query(collection(db, "userRol"), where("user_id", "==", uid));
 
         if(!queryRolUser) {
           throw new Error("No se pudo obtener el rol del usuario");         
