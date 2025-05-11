@@ -178,7 +178,7 @@ app.post('/api/send-topic-notification', checkFirebaseInitialized, async (req, r
     if (!topic || !title || !body) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Se requieren topic, título y cuerpo del mensaje' 
+        message: `Se requieren topic, título y cuerpo del mensaje topic: ${topic}, title: ${title}, body: ${body}`
       });
     }
 
@@ -257,13 +257,58 @@ app.get('/api/firebase-status', (req, res) => {
     error: firebaseError
   });
 });
- 
+
+
+
+// Endpoint adaptado de manageSubscription de Firebase Function
+app.post('/api/manage-subscription', checkFirebaseInitialized, async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).send();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
+  const { token, topic, action } = req.body;
+  const validActions = ['subscribe', 'unsubscribe'];
+
+  if (!token || !topic || !validActions.includes(action)) {
+    return res.status(400).json({ error: 'token, topic y action (subscribe|unsubscribe) son requeridos' });
+  }
+
+  try {
+    let result;
+    const snippet = token.substring(0, 10);
+    if (action === 'subscribe') {
+      result = await admin.messaging().subscribeToTopic(token, topic);
+      console.log(`Token ${snippet}... suscrito a ${topic}`, result.successCount);
+    } else {
+      result = await admin.messaging().unsubscribeFromTopic(token, topic);
+      console.log(`Token ${snippet}... desuscrito de ${topic}`, result.successCount);
+    }
+    return res.json({ success: true, result });
+  } catch (error) {
+    console.error(`Error en ${action} topic ${topic}:`, error);
+    let message = `Failed to ${action} topic`;
+    if (error.code === 'messaging/invalid-argument') {
+      message = `Argumento inválido. Verifica token y topic.`;
+    } else if (error.code === 'messaging/registration-token-not-registered') {
+      message = `Token expirado o inválido.`;
+    }
+    return res.status(500).json({ success: false, error: message });
+  }
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Iniciar el servidor
-app.listen(port,'0.0.0.0', () => {
+app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });

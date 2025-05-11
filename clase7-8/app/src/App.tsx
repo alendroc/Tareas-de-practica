@@ -38,7 +38,7 @@ import { useAuth } from "./contexts/authContext";
 import { MenuLoggedIn } from "./components/Menu/private";
 import { MenuLoggedOut } from "./components/Menu/public";
 import Home from "./pages/Home";
-
+import Suscripcion from "./pages/suscripcion";
 import Tab3 from "./pages/Tab3";
 import Perfil from "./pages/Perfil";
 
@@ -60,6 +60,9 @@ const App: React.FC = () => {
             </Route>
             <Route path='/tab3'>
               <Tab3 />
+            </Route>
+            <Route path='/suscripcion'>
+                <Suscripcion />
             </Route>
             <Route exact path='/'>
               <Redirect to='/home' />

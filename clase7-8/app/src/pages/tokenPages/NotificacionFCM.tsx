@@ -41,11 +41,7 @@ const PushNotificationSender: React.FC = () => {
 
   return (
      <>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Enviar Notificación Push</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+   
       <IonContent className="ion-padding">
         <form onSubmit={handleSubmit}>
           <IonItem>

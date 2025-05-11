@@ -11,12 +11,10 @@ import {
   IonToggle,
   IonToast,
 } from '@ionic/react';
-import {  getToken } from 'firebase/messaging';
-import {  doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { PushNotifications } from '@capacitor/push-notifications';
-import { db, messaging } from '../../Services/firebase/config/firebaseConfig';
+import { db } from '../../Services/firebase/config/firebaseConfig';
 
-// Define la interfaz para los tópicos
 interface Topic {
   id: string;
   name: string;
@@ -33,36 +31,43 @@ const TopicSubscription: React.FC = () => {
   const [fcmToken, setFcmToken] = useState<string | null>(null);
 
   useEffect(() => {
-    initializePushNotifications();
-  }, []);
+    // Escuchar token recibido
+    PushNotifications.addListener('registration', async (token) => {
+      console.log('Token FCM obtenido:', token.value);
+      setFcmToken(token.value);
+      await loadUserSubscriptions(token.value);
+    });
 
-  const initializePushNotifications = async () => {
-    try {
-      // Solicitar permisos
-      const permStatus = await PushNotifications.requestPermissions();
-      if (permStatus.receive === 'granted') {
-        // Registrar para notificaciones push
-        await PushNotifications.register();
-        
-        // Obtener FCM token
-        const token = await getToken(messaging);
-        setFcmToken(token);
-        
-        // Cargar suscripciones existentes
-        await loadUserSubscriptions(token);
+    // Escuchar error de registro
+    PushNotifications.addListener('registrationError', (error) => {
+      console.error('Error al registrar el dispositivo:', error);
+      setToastMessage('Error al registrar el dispositivo');
+      setShowToast(true);
+    });
+
+    // Solicitar permisos y registrar
+    const init = async () => {
+      try {
+        const permStatus = await PushNotifications.requestPermissions();
+        if (permStatus.receive === 'granted') {
+          await PushNotifications.register();
+        } else {
+          console.warn('Permiso para notificaciones no concedido');
+        }
+      } catch (error) {
+        console.error('Error inicializando notificaciones:', error);
       }
-    } catch (error) {
-      console.error('Error initializing push notifications:', error);
-    }
-  };
+    };
+
+    init();
+  }, []);
 
   const loadUserSubscriptions = async (token: string) => {
     try {
-      const userDoc = await getDoc(doc(db, 'users', token));
-      
+      const userDoc = await getDoc(doc(db, 'userTopic', token));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        setTopics(prevTopics => 
+        setTopics(prevTopics =>
           prevTopics.map(topic => ({
             ...topic,
             subscribed: userData.topics?.includes(topic.id) || false
@@ -81,40 +86,49 @@ const TopicSubscription: React.FC = () => {
       return;
     }
 
+    const topic = topics.find(t => t.id === topicId);
+    const willSubscribe = !topic?.subscribed;
+    const action = willSubscribe ? 'subscribe' : 'unsubscribe';
+
     try {
-      const updatedTopics = topics.map(topic => {
-        if (topic.id === topicId) {
-          return { ...topic, subscribed: !topic.subscribed };
-        }
-        return topic;
+      // Llama a tu API backend para suscribir/desuscribir
+      const response = await fetch('http://10.0.2.2:3000/api/manage-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: fcmToken, topic: topicId, action }),
       });
 
-      // Actualizar estado local
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Error en la suscripci贸n');
+      }
+
+      // Actualiza local y en Firestore si fue exitoso
+      const updatedTopics = topics.map(t =>
+        t.id === topicId ? { ...t, subscribed: willSubscribe } : t
+      );
       setTopics(updatedTopics);
 
-      // Guardar en Firestore
-      await setDoc(doc(db, 'users', fcmToken), {
+      await setDoc(doc(db, 'userTopic', fcmToken), {
         topics: updatedTopics.filter(t => t.subscribed).map(t => t.id),
         token: fcmToken,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       }, { merge: true });
 
-      const topic = updatedTopics.find(t => t.id === topicId);
-      setToastMessage(`${topic?.subscribed ? 'Suscrito a' : 'Desuscrito de'} ${topic?.name}`);
-      setShowToast(true);
-
+      setToastMessage(`${willSubscribe ? 'Suscrito a' : 'Desuscrito de'} ${topic?.name}`);
     } catch (error) {
-      console.error('Error updating subscription:', error);
-      setToastMessage('Error al actualizar la suscripción');
-      setShowToast(true);
+      console.error('Error actualizando suscripcion:', error);
+      setToastMessage('Error al actualizar la suscripci贸n');
     }
+
+    setShowToast(true);
   };
 
   return (
-    <IonPage>
+    <>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Suscripción a Temas</IonTitle>
+          <IonTitle>Suscripcion a Temas</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -136,7 +150,7 @@ const TopicSubscription: React.FC = () => {
           duration={2000}
         />
       </IonContent>
-    </IonPage>
+    </>
   );
 };
 

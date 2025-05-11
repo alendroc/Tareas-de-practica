@@ -16,6 +16,10 @@ export const MenuLoggedIn = () => {
         <IonIcon aria-hidden='true' icon={triangle} />
         <IonLabel>Tab 3</IonLabel>
       </IonTabButton>
+      <IonTabButton tab='suscripcion' href='/suscripcion'>
+        <IonIcon aria-hidden='true' icon={triangle} />
+        <IonLabel>Suscription</IonLabel>
+      </IonTabButton>
     </IonTabBar>
   );
 };
