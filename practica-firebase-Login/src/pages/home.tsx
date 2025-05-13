@@ -1,14 +1,22 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons } from '@ionic/react';
+import NotificationIcon from '../components/notification/notificationIcon';
 import ExploreContainer from '../components/ExploreContainer';
+import FirebaseStatus from '../components/verifyConeccion/apiNotification'
 import './home.css';
-
+import "../components/notification/notificationicon.css";
 const Home: React.FC = () => {
-  console.log("Se montó el componente Home/Tab1");
+
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className='toolbar-flex'>
           <IonTitle>Home</IonTitle>
+          <div slot="end">
+          <FirebaseStatus></FirebaseStatus>  
+          </div>
+          <IonButtons slot='end'>
+          <NotificationIcon />
+        </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

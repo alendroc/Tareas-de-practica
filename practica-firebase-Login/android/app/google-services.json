@@ -12,7 +12,20 @@
           "package_name": "paratica.una.ale"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "190466759683-gcel9tv5gov3mrhe7or9o9mhu118kbpd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "paratica.una.ale",
+            "certificate_hash": "5fd4707070f611bc7a34d7063d85eeb4182b7ddd"
+          }
+        },
+        {
+          "client_id": "190466759683-1jg5f0sh96n0v8ij1vamas7157bs8r47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCj2UpcFy0UELAsFCWf1-_UCFMG5CI2fb0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190466759683-1jg5f0sh96n0v8ij1vamas7157bs8r47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -10,19 +10,23 @@ return (
             <IonIcon aria-hidden="true" icon={triangle} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="Perfil" href="/perfil">
             <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel> 
+            <IonLabel>Perfil</IonLabel> 
           </IonTabButton>
-          {rol === "admin" && (
-        <IonTabButton tab="tab3" href="/tab3">
+        {rol === "admin" && (
+        <IonTabButton tab="notification" href="/notification">
           <IonIcon aria-hidden="true" icon={square} />
-          <IonLabel>Admin Button</IonLabel>
+          <IonLabel>Notification</IonLabel>
         </IonTabButton>
       )}
-          <IonTabButton tab="logout-action1" className="papaOut" style={{paddin:"0px"}}>
-            <LogoutButton />
+       <IonTabButton tab="suscription" href="/suscription">
+            <IonIcon aria-hidden="true" icon={ellipse} />
+            <IonLabel>suscription</IonLabel> 
           </IonTabButton>
+          {/*<IonTabButton tab="logout-action1" className="papaOut" style={{paddin:"0px"}}>
+            <LogoutButton/>
+          </IonTabButton>*/}
          
     </IonTabBar>
 );

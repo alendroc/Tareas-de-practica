@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonButton, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonText } from '@ionic/react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../services/firebase/firebaseConfig';
 import { doc,setDoc } from 'firebase/firestore';
 import { IonToast } from "@ionic/react"; 
@@ -9,13 +9,16 @@ const Register: React.FC<{ onToggleForm: () => void }> = ({ onToggleForm }) => {
     const [errorMessage, setErrorMessage] = React.useState("");
     const [showToast, setShowToast] = React.useState(false);
 
-    async function registerUser(email: string, password: string, rol: string) {
+    async function registerUser(name:string, email: string, password: string, rol: string) {
         try {
-            const infoUsuario = await createUserWithEmailAndPassword(auth, email, password);
-            console.log("Usuario registrado:", infoUsuario.user.uid);
-            // Aquí podrías redirigir o limpiar formulario si quieres
-            const docuRef = doc(db, `userRol/${infoUsuario.user.uid}` );
-            setDoc(docuRef, {correo: email, rol: rol});
+          const infoUsuario = await createUserWithEmailAndPassword(auth, email, password);
+          await updateProfile(infoUsuario.user, {
+            displayName: name,
+          });
+            const docuRef = doc(db,`userRol/${infoUsuario.user.uid}` );
+            await  setDoc(docuRef, { name: name, correo: email, rol: rol });
+            // Verificar si realmente existe
+            
           } catch (error: any) {
             let mensaje = "Ocurrió un error al registrar el usuario.";
             switch (error.code) {
@@ -33,7 +36,6 @@ const Register: React.FC<{ onToggleForm: () => void }> = ({ onToggleForm }) => {
             }
             setErrorMessage(mensaje);
             setShowToast(true);
-            console.error("Error al registrar el usuario:", error);
           }
         }
       
@@ -41,11 +43,12 @@ const Register: React.FC<{ onToggleForm: () => void }> = ({ onToggleForm }) => {
     function sumitHandler(event: React.FormEvent) {
         event.preventDefault();
         const form = event.target as HTMLFormElement;
+        const name = (form.elements.namedItem('name') as HTMLInputElement).value;
         const email = (form.elements.namedItem('email') as HTMLInputElement).value;
         const password = (form.elements.namedItem('password') as HTMLInputElement).value;
         const rol = (form.elements.namedItem('rol') as HTMLInputElement).value;
         console.log(email, password, rol);
-        registerUser(email, password, rol).then(() => {
+        registerUser(name, email, password, rol).then(() => {
             console.log("Usuario registrado");
         }).catch((error) => {
             console.error("Error al registrar el usuario:", error);
@@ -55,6 +58,14 @@ const Register: React.FC<{ onToggleForm: () => void }> = ({ onToggleForm }) => {
 return (
     <div className="login-access">
       <form onSubmit={sumitHandler}>
+      <IonItem>
+    <IonInput
+
+      name="name"
+      required
+      placeholder="Firs name"
+    ></IonInput>
+  </IonItem>
       <IonItem>
     <IonInput
       type="email"

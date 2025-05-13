@@ -13,8 +13,9 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import {ButonNavegation} from './components/menu/option';
 import Home from './pages/home';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import Perfil from './pages/perfil';
+import Notification from './pages/tabNotification';
+import Suscripcion from './pages/tabsuscription';
 import {Login} from './pages/security/login';
 import { useAuth } from './components/context/userContext';
 /* Core CSS required for Ionic components to work properly */
@@ -68,14 +69,12 @@ const App: React.FC = () => {
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/home" component={Home} />
-          <Route exact path="/tab2" component={Tab2} />
-          <Route path="/tab3" component={Tab3} />
+          <Route exact path="/perfil" component={Perfil} />
+          <Route path="/notification" component={Notification} />
+          <Route path="/suscription" component={Suscripcion} />
            <Route exact path="/">
             <Redirect to="/home" />
           </Route>
-         {/*<Route path="*">
-                <Redirect to="/home" />
-          </Route>*/} 
         </IonRouterOutlet>
         <ButonNavegation rol={rol || 'defaultRole'}/>
       </IonTabs>

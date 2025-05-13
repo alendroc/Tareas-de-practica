@@ -1,0 +1,6 @@
+ion-toolbar.toolbar-flex .toolbar-content {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aliceblue;
+  }
