@@ -22,6 +22,11 @@ export const MenuLoggedIn = () => {
         <IonLabel>Location</IonLabel>
       </IonTabButton>
 
+      <IonTabButton tab='location' href='/mapa'>
+        <IonIcon aria-hidden='true' icon={locateOutline} />
+        <IonLabel>Mapa</IonLabel>
+      </IonTabButton>
+
       {["admin", "user"].includes(user?.rol || "") && (
         <IonTabButton tab='perfil' href='/perfil'>
           <IonIcon aria-hidden='true' icon={personOutline} />

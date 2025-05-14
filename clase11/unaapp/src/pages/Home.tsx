@@ -3,6 +3,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/rea
 import AppHeader from "../components/head/AppHeader";
 import FirebaseStatus from "../components/cargarServicio";
 import Acelerometro from "../components/acelerometro";
+import BarCode from "../components/barCode/barCode";
 
 const Home: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const Home: React.FC = () => {
         </IonHeader>
       </IonContent>
       <h1>Home</h1>
+      <BarCode />
       <Acelerometro />
       <FirebaseStatus />
     </IonPage>

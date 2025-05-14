@@ -5,14 +5,15 @@ import { getMessaging } from "firebase/messaging";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDSeuDktyICaP1jUk_XM1q0BgtOS0BsXec",
-  authDomain: "practica-7c621.firebaseapp.com",
-  projectId: "practica-7c621",
-  storageBucket: "practica-7c621.firebasestorage.app",
-  messagingSenderId: "190466759683",
-  appId: "1:190466759683:web:89a01058da62f1a67c4236",
-  measurementId: "G-6BKJBVJNSQ"
+  apiKey:  import.meta.env.VITE_FIREBASE_API_KEY || "",
+  authDomain:  import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "",
+  projectId:  import.meta.env.VITE_FIREBASE_PROJECT_ID || "",
+  storageBucket:  import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId:  import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId:  import.meta.env.VITE_FIREBASE_APP_ID || "",
+  measurementId:   import.meta.env.VITE_MEASUREMENT_ID || ""
 };
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

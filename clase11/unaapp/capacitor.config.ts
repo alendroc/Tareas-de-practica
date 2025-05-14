@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'paratica.una.ale',
+  appId: 'com.unaapp.appu',
   appName: 'unaapp',
   webDir: 'dist',
   bundledWebRuntime: false,
@@ -19,9 +19,10 @@ const config: CapacitorConfig = {
     },
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"]
-    }, GoogleMaps: {
-      apiKey: "AIzaSyBV35eS9s-QUwN0WcZWeK-XIoICekxqXwk", // Reemplaza con tu clave de API      
     },
+    GoogleMaps: {
+        apiKey: "AIzaSyALiSvM4DZTlQXtNi6HL5fxMPppkDXlnMs",
+      },
   }
 };
 

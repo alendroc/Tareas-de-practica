@@ -44,6 +44,7 @@ import Perfil from "./pages/Perfil";
 import PrivateRoute from "./routers/PrivateRoute";
 import Unauthorized from "./pages/Unauthorized";
 import LocationTracker from "./pages/LocationTracker";
+import Mapa from "./pages/Mapa";
 
 setupIonicReact();
 
@@ -66,7 +67,11 @@ const App: React.FC = () => {
             <Route exact path='/location'>
               <LocationTracker />
             </Route>
-
+            
+            <Route exact path='/mapa'>
+              <Mapa />
+            </Route>
+            
             <Route exact path='/'>
               <Redirect to='/home' />
             </Route>
